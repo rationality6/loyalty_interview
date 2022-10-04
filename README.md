@@ -18,14 +18,15 @@
 # point_history
 	user_id
 	transection_id
-	point_earns
+	point_earns int
 	expired date
 	timestamp
 
 # transactions
 	user_id
+    point_history_id
+    rebate_history_id
 	spends int
-	point_earns int
 	from_ foreign_country boolean
 	reworded boolean
 	timestamp
@@ -35,7 +36,7 @@
 	point
 	timestamp
 
-# rewords
+# rewards
 	user_id
 	reward_name
 	used date
