@@ -39,5 +39,5 @@
 # rewards
 	user_id
 	reward_name
-	used date
+	when_used date
 	timestamp
