@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_04_053457) do
+ActiveRecord::Schema.define(version: 2022_10_04_080630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "profiles", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "name", default: "", comment: "user name"
+    t.datetime "birthday", comment: "user birthday"
+    t.string "tier", comment: "user tier"
+    t.bigint "point_total", default: 0, comment: "user point total for cache"
+    t.boolean "cash_rebate_qualified", default: false, comment: "user rebate qualified"
+    t.bigint "rebate", default: 0, comment: "user rebate total for cache"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
