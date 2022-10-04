@@ -19,7 +19,7 @@
 # transactions
 	user_id
 	spends int
-	from_ foreign_country boolean
+	from_foreign_country boolean
 	reworded boolean
 	timestamp
 
