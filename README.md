@@ -4,6 +4,7 @@
 
 
 # users
+    # with basic device property
 	timestamp
 
 # profiles
@@ -24,8 +25,6 @@
 
 # transactions
 	user_id
-    point_history_id
-    rebate_history_id
 	spends int
 	from_ foreign_country boolean
 	reworded boolean
@@ -33,6 +32,7 @@
 
 # rebate_history
 	user_id
+    transaction_id
 	point
 	timestamp
 
