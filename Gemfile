@@ -42,7 +42,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'guard-rspec', require: false
   gem 'rspec-json_expectations'
-  
+
 end
 
 group :development do
