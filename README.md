@@ -15,14 +15,14 @@
 	rebate_total 0
 	timestamp
 
-# point_historys
+# point_history
 	user_id
 	transection_id
 	point_earns
 	expired date
 	timestamp
 
-# transections
+# transactions
 	user_id
 	spends int
 	point_earns int
@@ -30,7 +30,7 @@
 	reworded boolean
 	timestamp
 
-# rebate_historys
+# rebate_history
 	user_id
 	point
 	timestamp
