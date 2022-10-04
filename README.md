@@ -1,24 +1,35 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+users
+	id
+	name
+	timestamp
+	tier ["standard", "gold", "platinum" ]
+	point_total 0
+	rebate_total 0
 
-* Ruby version
+points_history
+	user_id
+	transection_id
+	point_earns
+	expired date
 
-* System dependencies
+transections
+	user_id
+	spends int
+	point_earns int
+	from_ foreign_country boolean
+	reworded boolean
+	timestamp
 
-* Configuration
+rebate_history
+	user_id
+	point
+	timestamp
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+rewords
+	user_id
+	reward_name
+	used date
+	timestamp
