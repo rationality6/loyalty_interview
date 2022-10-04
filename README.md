@@ -4,6 +4,9 @@
 
 
 # users
+	timestamp
+
+# profiles
 	name
 	birthday
 	tier ["standard", "gold", "platinum" ]
