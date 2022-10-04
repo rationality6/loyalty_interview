@@ -1,21 +1,25 @@
 # README
 
 
-users
-	id
+
+
+# users
 	name
-	timestamp
+	birthday
 	tier ["standard", "gold", "platinum" ]
 	point_total 0
+	cash_rebate_qualified boolean
 	rebate_total 0
+	timestamp
 
-points_history
+# point_historys
 	user_id
 	transection_id
 	point_earns
 	expired date
+	timestamp
 
-transections
+# transections
 	user_id
 	spends int
 	point_earns int
@@ -23,12 +27,12 @@ transections
 	reworded boolean
 	timestamp
 
-rebate_history
+# rebate_historys
 	user_id
 	point
 	timestamp
 
-rewords
+# rewords
 	user_id
 	reward_name
 	used date
