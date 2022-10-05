@@ -1,6 +1,6 @@
 class Api::V1::TransactionsController < ApplicationController
   def purchase
-    raise "no money spending" unless params[:spend].present?
+    raise "no spend params" unless params[:spend].present?
 
     new_transaction = Transaction.create(
       {
