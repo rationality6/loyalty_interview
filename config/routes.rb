@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  scope module: :api, path: '/api' do
+    scope module: :v1, path: '/v1' do
+      resources :purchase_transactions do
+        collection do
+          post :purchase
+        end
+      end
+    end
+  end
+
 end

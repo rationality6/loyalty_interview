@@ -5,5 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :profile, dependent: :destroy
-  has_many :transactions
+  has_many :purchase_transactions
+  has_many :point_histories
 end
