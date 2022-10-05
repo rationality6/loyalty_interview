@@ -15,15 +15,15 @@ ActiveRecord::Schema.define(version: 2022_10_04_104137) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "point_history", force: :cascade do |t|
+  create_table "point_histories", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "transaction_id"
     t.bigint "point_earn", default: 0, comment: "point earn"
     t.datetime "expired", comment: "expired after 1 year"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["transaction_id"], name: "index_point_history_on_transaction_id"
-    t.index ["user_id"], name: "index_point_history_on_user_id"
+    t.index ["transaction_id"], name: "index_point_histories_on_transaction_id"
+    t.index ["user_id"], name: "index_point_histories_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -39,14 +39,14 @@ ActiveRecord::Schema.define(version: 2022_10_04_104137) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
-  create_table "rebate_history", force: :cascade do |t|
+  create_table "rebate_histories", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "transaction_id"
     t.bigint "point", default: 0, comment: "rebate user earn"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["transaction_id"], name: "index_rebate_history_on_transaction_id"
-    t.index ["user_id"], name: "index_rebate_history_on_user_id"
+    t.index ["transaction_id"], name: "index_rebate_histories_on_transaction_id"
+    t.index ["user_id"], name: "index_rebate_histories_on_user_id"
   end
 
   create_table "rewards", force: :cascade do |t|
