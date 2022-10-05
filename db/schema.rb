@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2022_10_04_104137) do
     t.bigint "user_id"
     t.string "name", default: "", comment: "user name"
     t.datetime "birthday", comment: "user birthday"
-    t.string "tier", comment: "user tier"
+    t.string "tier", default: "standard", comment: "user tier ['standard', 'gold', 'platinum' ]"
     t.bigint "point_total", default: 0, comment: "user point total for cache"
     t.boolean "cash_rebate_qualified", default: false, comment: "user rebate qualified"
     t.bigint "rebate", default: 0, comment: "user rebate total for cache"
