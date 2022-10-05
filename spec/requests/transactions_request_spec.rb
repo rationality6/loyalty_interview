@@ -13,22 +13,22 @@ RSpec.describe "Transactions", type: :request do
     profile
   }
 
-  context "10% point" do
-    it "when no params spend" do
-      expect {
-        post '/api/v1/transactions/purchase', params: {}
-      }.to raise_error("no spend params")
-    end
+  it "when no params spend" do
+    expect {
+      post '/api/v1/transactions/purchase', params: {}
+    }.to raise_error("no spend params")
+  end
 
-    it "status check" do
-      post '/api/v1/transactions/purchase', params: { spend: 60 }
-      expect(response.status).to(eq(200))
-    end
+  it "status check" do
+    post '/api/v1/transactions/purchase', params: { spend: 60 }
+    expect(response.status).to(eq(200))
+  end
 
-    it "user save" do
-      binding.pry
-      expect('a').to(eq('a'))
-    end
+  it "10% point" do
+    expect
+  end
+
+  it "when from foreign country, point * 2 " do
 
   end
 end
