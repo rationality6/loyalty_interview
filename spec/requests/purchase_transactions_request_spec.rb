@@ -15,20 +15,24 @@ RSpec.describe "PurchaseTransactions", type: :request do
 
   it "when no params spend" do
     expect {
-      post '/api/v1/purchase_transactions/purchase', params: {}
+      post purchase_purchase_transactions_url, params: {}
     }.to raise_error("no spend params")
   end
 
   it "status check" do
-    post '/api/v1/purchase_transactions/purchase', params: { spend: 60 }
+    post purchase_purchase_transactions_url, params: { spend: 60 }
     expect(response.status).to(eq(200))
   end
 
-  # it "10% point" do
-  #   expect
-  # end
-  #
-  # it "when from foreign country, point * 2 " do
-  #
-  # end
+  it "created and returned purchase_transactions" do
+    post purchase_purchase_transactions_url, params: { spend: 60 }
+    expect(response.body).to include_json({
+                                            spend: 60,
+                                            user_id: test_user.id
+                                          })
+  end
+
+  pending "10% point"
+  pending "from_foreign * 2"
+
 end
