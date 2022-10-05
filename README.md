@@ -16,7 +16,7 @@
 	rebate_total 0
 	timestamp
 
-# transactions
+# purchase_transactions
 	user_id
 	spends int
 	from_foreign_country boolean
@@ -25,14 +25,14 @@
 
 # point_history
 	user_id
-	transaction_id
+	purchase_purchasetransaction_id
 	point_earns int
 	expired date
 	timestamp
 
 # rebate_history
 	user_id
-    transaction_id
+    purchase_transaction_id
 	point
 	timestamp
 

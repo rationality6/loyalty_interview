@@ -1,3 +1,3 @@
 class PointHistory < ApplicationRecord
-  belongs_to :transaction
+  belongs_to :purchase_transaction
 end

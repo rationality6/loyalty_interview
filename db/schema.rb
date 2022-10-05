@@ -17,12 +17,12 @@ ActiveRecord::Schema.define(version: 2022_10_04_104137) do
 
   create_table "point_histories", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "transaction_id"
+    t.bigint "purchase_transaction_id"
     t.bigint "point_earn", default: 0, comment: "point earn"
     t.datetime "expired", comment: "expired after 1 year"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["transaction_id"], name: "index_point_histories_on_transaction_id"
+    t.index ["purchase_transaction_id"], name: "index_point_histories_on_purchase_transaction_id"
     t.index ["user_id"], name: "index_point_histories_on_user_id"
   end
 
@@ -39,13 +39,23 @@ ActiveRecord::Schema.define(version: 2022_10_04_104137) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "purchase_transactions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "spend", default: 0, comment: "money spending user transaction"
+    t.boolean "from_foreign_country", default: false, comment: "transaction from foreign check"
+    t.boolean "rewarded", default: false, comment: "rewarded check"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_purchase_transactions_on_user_id"
+  end
+
   create_table "rebate_histories", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "transaction_id"
+    t.bigint "purchase_transaction_id"
     t.bigint "point", default: 0, comment: "rebate user earn"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["transaction_id"], name: "index_rebate_histories_on_transaction_id"
+    t.index ["purchase_transaction_id"], name: "index_rebate_histories_on_purchase_transaction_id"
     t.index ["user_id"], name: "index_rebate_histories_on_user_id"
   end
 
@@ -56,16 +66,6 @@ ActiveRecord::Schema.define(version: 2022_10_04_104137) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_rewards_on_user_id"
-  end
-
-  create_table "transactions", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "spend", default: 0, comment: "money spending user transaction"
-    t.boolean "from_foreign_country", default: false, comment: "transaction from foreign check"
-    t.boolean "rewarded", default: false, comment: "rewarded check"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
