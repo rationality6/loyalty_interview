@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe "Transactions", type: :request do
-  let(:test_user) {
+  let!(:test_user) {
     user = User.new
     user.save(validate: false)
     user
   }
 
-  let(:test_user_profile) {
+  let!(:test_user_profile) {
     profile = Profile.new({ user_id: test_user.id })
     profile.save()
     profile
