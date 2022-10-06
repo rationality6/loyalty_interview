@@ -32,7 +32,36 @@ RSpec.describe "PurchaseTransactions", type: :request do
                                           })
   end
 
-  pending "10% point"
-  pending "from_foreign * 2"
+  describe "10% point earn" do
+    it "when 250" do
+      post purchase_purchase_transactions_url, params: { spend: 250 }
+      transaction_id = JSON.parse(response.body)['id']
+      point_history = PointHistory.find(transaction_id)
+      expect(point_history.point_earn).to eq(25)
+    end
+
+    it "when 530" do
+      post purchase_purchase_transactions_url, params: { spend: 530 }
+      transaction_id = JSON.parse(response.body)['id']
+      point_history = PointHistory.find(transaction_id)
+      expect(point_history.point_earn).to eq(53)
+    end
+  end
+
+  describe "from_foreign_country x 2" do
+    it "when 250" do
+      post purchase_purchase_transactions_url, params: { spend: 250, from_foreign_country: true }
+      transaction_id = JSON.parse(response.body)['id']
+      point_history = PointHistory.find(transaction_id)
+      expect(point_history.point_earn).to eq(50)
+    end
+
+    it "when 530" do
+      post purchase_purchase_transactions_url, params: { spend: 530, from_foreign_country: true }
+      transaction_id = JSON.parse(response.body)['id']
+      point_history = PointHistory.find(transaction_id)
+      expect(point_history.point_earn).to eq(106)
+    end
+  end
 
 end

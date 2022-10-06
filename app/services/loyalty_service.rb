@@ -4,7 +4,12 @@ class LoyaltyService
   end
 
   def save_point(transaction_object:)
-    point = point_formula(transaction_object.spend)
+
+    point = if transaction_object.from_foreign_country
+              foreign_point_formula(spend: transaction_object.spend)
+            else
+              point_formula(spend: transaction_object.spend)
+            end
 
     point_history = PointHistory.new({
                                        user_id: @user.id,
@@ -26,8 +31,13 @@ class LoyaltyService
     @user.profile.update({ point_total: new_total_point })
   end
 
-  def point_formula(spend)
+  def point_formula(spend:)
     (spend.to_f / 10).round
   end
+
+  def foreign_point_formula(spend:)
+    point_formula(spend: spend) * 2
+  end
+
 end
 
