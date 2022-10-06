@@ -6,13 +6,7 @@ class Api::V1::PurchaseTransactionsController < ApplicationController
     raise "no spend params" unless params[:spend].present?
     params[:from_foreign_country] = false unless params[:from_foreign_country].present?
 
-    new_transaction = PurchaseTransaction.create(
-      {
-        user_id: @current_user.id,
-        spend: params[:spend],
-        from_foreign_country: params[:from_foreign_country]
-      }
-    )
+    new_transaction = PurchaseTransaction.new_transaction(user: @current_user, params: params)
 
     @loyalty_service_instanse.save_point(transaction_object: new_transaction)
 
