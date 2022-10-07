@@ -65,18 +65,78 @@ RSpec.describe "PurchaseTransactions", type: :request do
   end
 
   describe "If the end user accumulates 100 points in one calendar month they are given a Free Coffee reward" do
-    it "user already have coffee reward current month" do
-      post purchase_purchase_transactions_url, params: { spend: 1000 }
-      expect {
-        post purchase_purchase_transactions_url, params: { spend: 1000 }
-      }.to raise_error("user already got this month coffee coupon")
-    end
-
     it "user will get coffee reward current month" do
       expect(Reward.validate_publish_month_coffee_reward(user: test_user)).to eq(false)
       post purchase_purchase_transactions_url, params: { spend: 1000 }
       expect(Reward.validate_publish_month_coffee_reward(user: test_user)).to eq(true)
     end
+  end
+
+  describe "rebate right" do
+    it "qualified user will have rebate right when spend more than $100" do
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+
+      post purchase_purchase_transactions_url, params: { spend: 100 }
+
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(true)
+    end
+
+    it "user will not have rebate right when spend less than $100" do
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+
+      post purchase_purchase_transactions_url, params: { spend: 99 }
+
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+    end
+
+    it "qualified user will have rebate right when spend more than 10 transactions" do
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+
+      10.times {
+        post purchase_purchase_transactions_url, params: { spend: 1 }
+      }
+
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(true)
+    end
+
+    it "user will not have rebate right when spend less than 10 transactions" do
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+
+      9.times {
+        post purchase_purchase_transactions_url, params: { spend: 1 }
+      }
+
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+    end
+
+    describe "cash rebate 5%" do
+      it "when 100" do
+        post purchase_purchase_transactions_url, params: { spend: 100 }
+        transaction_id = JSON.parse(response.body)['id']
+        result_rabate_point = RebateHistory
+                                .where(user_id: test_user)
+                                .where(purchase_transaction_id: transaction_id)
+        expect(result_rabate_point[0].point).to eq(5)
+      end
+
+      it "when 250" do
+        post purchase_purchase_transactions_url, params: { spend: 250 }
+        transaction_id = JSON.parse(response.body)['id']
+        result_rabate_point = RebateHistory
+                                .where(user_id: test_user)
+                                .where(purchase_transaction_id: transaction_id)
+        expect(result_rabate_point[0].point).to eq(13)
+      end
+    end
+
   end
 
 end
