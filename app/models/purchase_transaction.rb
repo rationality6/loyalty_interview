@@ -12,4 +12,15 @@ class PurchaseTransaction < ApplicationRecord
     )
     purchase_transaction
   end
+
+  def self.check_user_spend_more_than_100(user:)
+    100 <= PurchaseTransaction.where(user_id: user.id).pluck(:spend).sum
+  end
+
+  def self.check_user_have_transactions_more_than_10(user:)
+    10 <= PurchaseTransaction.where(user_id: user.id).count
+  end
+
+  private
+
 end

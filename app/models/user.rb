@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_many :purchase_transactions
   has_many :point_histories
+  has_many :rebate_histories
   has_many :rewards
 
 end
