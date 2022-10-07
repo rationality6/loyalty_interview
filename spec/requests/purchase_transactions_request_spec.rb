@@ -79,4 +79,9 @@ RSpec.describe "PurchaseTransactions", type: :request do
     end
   end
 
+  describe "A 5% Cash Rebate reward is given to all users who have 10 or more transactions that have an amount > $100" do
+    pending "'10 or more transactions that have an amount > $100' user will have rebate right"
+    pending "cash rebate 5%"
+  end
+
 end
