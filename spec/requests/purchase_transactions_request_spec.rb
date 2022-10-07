@@ -79,8 +79,51 @@ RSpec.describe "PurchaseTransactions", type: :request do
     end
   end
 
-  describe "A 5% Cash Rebate reward is given to all users who have 10 or more transactions that have an amount > $100" do
-    pending "'10 or more transactions that have an amount > $100' user will have rebate right"
+  describe "rebate right" do
+    it "qualified user will have rebate right when spend more than $100" do
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+
+      post purchase_purchase_transactions_url, params: { spend: 100 }
+
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(true)
+    end
+
+    it "user will not have rebate right when spend less than $100" do
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+
+      post purchase_purchase_transactions_url, params: { spend: 99 }
+
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+    end
+
+    it "qualified user will have rebate right when spend more than 10 transactions" do
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+
+      10.times {
+        post purchase_purchase_transactions_url, params: { spend: 1 }
+      }
+
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(true)
+    end
+
+    it "user will not have rebate right when spend less than 10 transactions" do
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+
+      9.times {
+        post purchase_purchase_transactions_url, params: { spend: 1 }
+      }
+
+      result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
+      expect(result).to eq(false)
+    end
+
     pending "cash rebate 5%"
   end
 
