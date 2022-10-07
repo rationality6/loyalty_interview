@@ -19,11 +19,17 @@ class LoyaltyService
 
     point_history.save
 
+    update_user_point_total(point: point)
+
+    # free coffee reward
     if PointHistory.validate_accumulates_point_current_month(user: @user)
       Reward.get_free_coffee_reward(user: @user)
     end
 
-    update_user_point_total(point: point)
+    # rebate point
+    if RebateHistory.check_and_update_user_rebate_right(user: @user)
+      RebateHistory.new.give_user_rebate(user: @user, transaction_object: transaction_object)
+    end
 
     point_history
   end

@@ -2,7 +2,7 @@ class Reward < ApplicationRecord
   belongs_to :user
 
   def self.get_free_coffee_reward(user:)
-    raise "user already got this month coffee coupon" if validate_publish_month_coffee_reward(user: user)
+    return "user already got this month coffee coupon" if validate_publish_month_coffee_reward(user: user)
 
     Reward.create(
       user_id: user.id,
@@ -24,8 +24,6 @@ class Reward < ApplicationRecord
     birthday_users
   end
 
-  private
-
   def self.validate_publish_month_coffee_reward(user:)
     beginning_of_month = Date.today.beginning_of_month
     beginning_of_next_month = beginning_of_month.next_month
@@ -37,5 +35,7 @@ class Reward < ApplicationRecord
 
     has_reward.present?
   end
+
+  private
 
 end
