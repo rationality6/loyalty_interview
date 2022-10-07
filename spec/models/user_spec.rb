@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "User Model", type: :model do
+RSpec.describe "User", type: :model do
   let!(:test_user) {
     user = User.new(email: "test_user")
     user.save(validate: false)
