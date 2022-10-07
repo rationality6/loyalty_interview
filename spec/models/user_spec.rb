@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "User Model", type: :model do
+RSpec.describe "User", type: :model do
   let!(:test_user) {
     user = User.new(email: "test_user")
     user.save(validate: false)
@@ -34,7 +34,7 @@ RSpec.describe "User Model", type: :model do
   describe "birthday coffee reward" do
     it "birthday" do
       # after batch
-      User.give_birthday_reward()
+      Reward.give_birthday_reward()
 
       birth_coffee_reward = Reward
                               .where(user_id: test_user.id)
@@ -44,7 +44,7 @@ RSpec.describe "User Model", type: :model do
     end
 
     it "no" do
-      User.give_birthday_reward()
+      Reward.give_birthday_reward()
       birth_coffee_reward = Reward
                               .where(user_id: past_birthday_user.id)
                               .where(reward_name: "Birth day Free Coffee reward")

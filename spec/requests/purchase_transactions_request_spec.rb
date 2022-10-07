@@ -64,4 +64,19 @@ RSpec.describe "PurchaseTransactions", type: :request do
     end
   end
 
+  describe "If the end user accumulates 100 points in one calendar month they are given a Free Coffee reward" do
+    it "user already have coffee reward current month" do
+      post purchase_purchase_transactions_url, params: { spend: 1000 }
+      expect {
+        post purchase_purchase_transactions_url, params: { spend: 1000 }
+      }.to raise_error("user already got this month coffee coupon")
+    end
+
+    it "user will get coffee reward current month" do
+      expect(Reward.validate_publish_month_coffee_reward(user: test_user)).to eq(false)
+      post purchase_purchase_transactions_url, params: { spend: 1000 }
+      expect(Reward.validate_publish_month_coffee_reward(user: test_user)).to eq(true)
+    end
+  end
+
 end
