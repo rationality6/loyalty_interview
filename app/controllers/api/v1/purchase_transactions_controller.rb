@@ -4,6 +4,7 @@ class Api::V1::PurchaseTransactionsController < ApplicationController
 
   def purchase
     raise "no spend params" unless params[:spend].present?
+
     params[:from_foreign_country] = false unless params[:from_foreign_country].present?
 
     new_transaction = PurchaseTransaction.new_transaction(user: @current_user, params: params)

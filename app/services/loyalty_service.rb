@@ -19,6 +19,10 @@ class LoyaltyService
 
     point_history.save
 
+    if PointHistory.validate_accumulates_point_current_month(user: @user)
+      Reward.get_free_coffee_reward(user: @user)
+    end
+
     update_user_point_total(point: point)
 
     point_history

@@ -12,8 +12,19 @@ class PointHistory < ApplicationRecord
     this_month_total_point
   end
 
-  def check_user_got_coffee_reward_this_month
-    # Reward.get_free_coffee_reward()
+  private
+
+  def self.validate_accumulates_point_current_month(user:)
+    beginning_of_month = Date.today.beginning_of_month
+    beginning_of_next_month = beginning_of_month.next_month
+
+    point_earn_current_month = PointHistory
+                                 .where(created_at: beginning_of_month..beginning_of_next_month)
+                                 .where(user_id: user.id)
+                                 .pluck(:point_earn)
+                                 .sum
+
+    100 <= point_earn_current_month
   end
 
 end
