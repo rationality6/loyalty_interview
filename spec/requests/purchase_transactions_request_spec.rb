@@ -117,7 +117,26 @@ RSpec.describe "PurchaseTransactions", type: :request do
       expect(result).to eq(false)
     end
 
-    pending "cash rebate 5%"
+    describe "cash rebate 5%" do
+      it "when 100" do
+        post purchase_purchase_transactions_url, params: { spend: 100 }
+        transaction_id = JSON.parse(response.body)['id']
+        result_rabate_point = RebateHistory
+                                .where(user_id: test_user)
+                                .where(purchase_transaction_id: transaction_id)
+        expect(result_rabate_point[0].point).to eq(5)
+      end
+
+      it "when 250" do
+        post purchase_purchase_transactions_url, params: { spend: 250 }
+        transaction_id = JSON.parse(response.body)['id']
+        result_rabate_point = RebateHistory
+                                .where(user_id: test_user)
+                                .where(purchase_transaction_id: transaction_id)
+        expect(result_rabate_point[0].point).to eq(13)
+      end
+    end
+
   end
 
 end
