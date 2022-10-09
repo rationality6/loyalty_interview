@@ -58,17 +58,17 @@ class Reward < ApplicationRecord
 
   def validate_user_from_transaction_within_days(user:, days:)
     first_transaction = PurchaseTransaction.where(user_id: user.id).first
-    return false if first_transaction == nil
+    return false unless first_transaction.present?
 
-    date_count_from_user_created_at = (Time.now.to_date - first_transaction.created_at.to_date).to_i
+    date_count_from_user_created_at = (Date.current - first_transaction.created_at.to_date).to_i
     date_count_from_user_created_at < days
   end
 
   def total_user_spend_from_transaction(user:)
     first_transaction = PurchaseTransaction.where(user_id: user.id).first
-    return false if first_transaction == nil
+    return false unless first_transaction.present?
 
-    total_sum = PurchaseTransaction.where(created_at: first_transaction.created_at..Date.current).pluck(:spend).sum
+    total_sum = PurchaseTransaction.where(created_at: first_transaction.created_at..Time.current).pluck(:spend).sum
     total_sum >= 1000
   end
 
