@@ -8,6 +8,7 @@
 
 mock_user = User.new(
   {
+    id: 600,
     email: "foobarman@gmail.com"
   }
 )
