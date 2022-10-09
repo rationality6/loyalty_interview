@@ -160,7 +160,17 @@ RSpec.describe "PurchaseTransactions", type: :request do
       expect(reward_result).to eq(true)
     end
 
-    pending "new user spend less than $1000 within 60 days"
+    it "new user spend less than $1000 within 60 days" do
+      post purchase_purchase_transactions_url, params: { spend: 999, test_user_id: test_user.id }
+      user_id = JSON.parse(response.body)['user_id']
+
+      reward_result = Reward
+                        .where(user_id: user_id)
+                        .where(reward_name: "A Free Movie Tickets")
+                        .present?
+
+      expect(reward_result).to eq(false)
+    end
 
     it "later 60 days" do
       post purchase_purchase_transactions_url, params: { spend: 1000, test_user_id: past_60_days_user.id }
