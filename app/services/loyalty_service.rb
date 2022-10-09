@@ -5,6 +5,7 @@ class LoyaltyService
 
   def save_point(transaction_object:)
 
+    # base point
     point = if transaction_object.from_foreign_country
               foreign_point_formula(spend: transaction_object.spend)
             else

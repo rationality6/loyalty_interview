@@ -18,11 +18,16 @@ class RebateHistory < ApplicationRecord
   def give_user_rebate(user:, transaction_object:)
     raise "no rebate right" unless user.profile.cash_rebate_qualified
 
+    rebate_point = rebate_formula(spend: transaction_object.spend)
+
     RebateHistory.create({
                            user_id: user.id,
                            purchase_transaction_id: transaction_object.id,
-                           point: rebate_formula(spend: transaction_object.spend)
+                           point: rebate_point
                          })
+
+    user.profile.update(rebate: user.profile.rebate + rebate_point)
+    user
   end
 
   private
