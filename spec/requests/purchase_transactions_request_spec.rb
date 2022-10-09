@@ -116,27 +116,32 @@ RSpec.describe "PurchaseTransactions", type: :request do
       result = RebateHistory.check_and_update_user_rebate_right(user: test_user)
       expect(result).to eq(false)
     end
+  end
 
-    describe "cash rebate 5%" do
-      it "when 100" do
-        post purchase_purchase_transactions_url, params: { spend: 100 }
-        transaction_id = JSON.parse(response.body)['id']
-        result_rabate_point = RebateHistory
-                                .where(user_id: test_user)
-                                .where(purchase_transaction_id: transaction_id)
-        expect(result_rabate_point[0].point).to eq(5)
-      end
-
-      it "when 250" do
-        post purchase_purchase_transactions_url, params: { spend: 250 }
-        transaction_id = JSON.parse(response.body)['id']
-        result_rabate_point = RebateHistory
-                                .where(user_id: test_user)
-                                .where(purchase_transaction_id: transaction_id)
-        expect(result_rabate_point[0].point).to eq(13)
-      end
+  describe "cash rebate 5%" do
+    it "when 100" do
+      post purchase_purchase_transactions_url, params: { spend: 100 }
+      transaction_id = JSON.parse(response.body)['id']
+      result_rabate_point = RebateHistory
+                              .where(user_id: test_user)
+                              .where(purchase_transaction_id: transaction_id)
+      expect(result_rabate_point[0].point).to eq(5)
     end
 
+    it "when 250" do
+      post purchase_purchase_transactions_url, params: { spend: 250 }
+      transaction_id = JSON.parse(response.body)['id']
+      result_rabate_point = RebateHistory
+                              .where(user_id: test_user)
+                              .where(purchase_transaction_id: transaction_id)
+      expect(result_rabate_point[0].point).to eq(13)
+    end
+  end
+
+  describe "A Free Movie Tickets" do
+    pending "new user spend >= $1000 within 60 days"
+    pending "new user spend less than $1000 within 60 days"
+    pending "later 60 days"
   end
 
 end
