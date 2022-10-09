@@ -35,6 +35,8 @@ class LoyaltyService
     # free movie tickets within 60 days
     Reward.new.check_user_free_movie_tickets(user: @user)
 
+    level_check_and_level_up(user: @user)
+
     point_history
   end
 
