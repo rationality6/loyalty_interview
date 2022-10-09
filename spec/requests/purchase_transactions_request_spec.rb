@@ -66,9 +66,9 @@ RSpec.describe "PurchaseTransactions", type: :request do
 
   describe "If the end user accumulates 100 points in one calendar month they are given a Free Coffee reward" do
     it "user will get coffee reward current month" do
-      expect(Reward.validate_publish_month_coffee_reward(user: test_user)).to eq(false)
+      expect(Reward.new.validate_publish_month_coffee_reward(user: test_user)).to eq(false)
       post purchase_purchase_transactions_url, params: { spend: 1000 }
-      expect(Reward.validate_publish_month_coffee_reward(user: test_user)).to eq(true)
+      expect(Reward.new.validate_publish_month_coffee_reward(user: test_user)).to eq(true)
     end
   end
 

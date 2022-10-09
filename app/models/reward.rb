@@ -1,7 +1,7 @@
 class Reward < ApplicationRecord
   belongs_to :user
 
-  def self.get_free_coffee_reward(user:)
+  def get_free_coffee_reward(user:)
     return "user already got this month coffee coupon" if validate_publish_month_coffee_reward(user: user)
 
     Reward.create(
@@ -24,7 +24,7 @@ class Reward < ApplicationRecord
     birthday_users
   end
 
-  def self.validate_publish_month_coffee_reward(user:)
+  def validate_publish_month_coffee_reward(user:)
     beginning_of_month = Date.today.beginning_of_month
     beginning_of_next_month = beginning_of_month.next_month
 
@@ -36,6 +36,47 @@ class Reward < ApplicationRecord
     has_reward.present?
   end
 
+  def check_user_free_movie_tickets(user:)
+    return "already have one" if validate_user_got_free_movie_tickets(user: user)
+    return "not within days from first transaction" unless validate_user_from_transaction_within_days(user: user, days: 60)
+
+    if total_user_spend_from_transaction(user: user)
+      give_user_movie_reward(user: user)
+    else
+      "not enough to get movie tickets"
+    end
+  end
+
   private
+
+  def validate_user_got_free_movie_tickets(user:)
+    Reward.where(
+      user_id: user.id,
+      reward_name: "A Free Movie Tickets"
+    ).present?
+  end
+
+  def validate_user_from_transaction_within_days(user:, days:)
+    first_transaction = PurchaseTransaction.where(user_id: user.id).first
+    return false if first_transaction == nil
+
+    date_count_from_user_created_at = (Time.now.to_date - first_transaction.created_at.to_date).to_i
+    date_count_from_user_created_at < days
+  end
+
+  def total_user_spend_from_transaction(user:)
+    first_transaction = PurchaseTransaction.where(user_id: user.id).first
+    return false if first_transaction == nil
+
+    total_sum = PurchaseTransaction.where(created_at: first_transaction.created_at..Date.current).pluck(:spend).sum
+    total_sum >= 1000
+  end
+
+  def give_user_movie_reward(user:)
+    Reward.create(
+      user_id: user.id,
+      reward_name: "A Free Movie Tickets",
+    )
+  end
 
 end

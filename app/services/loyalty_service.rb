@@ -24,13 +24,16 @@ class LoyaltyService
 
     # free coffee reward
     if PointHistory.validate_accumulates_point_current_month(user: @user)
-      Reward.get_free_coffee_reward(user: @user)
+      Reward.new.get_free_coffee_reward(user: @user)
     end
 
     # rebate point
     if RebateHistory.check_and_update_user_rebate_right(user: @user)
       RebateHistory.new.give_user_rebate(user: @user, transaction_object: transaction_object)
     end
+
+    # free movie tickets within 60 days
+    Reward.new.check_user_free_movie_tickets(user: @user)
 
     point_history
   end
