@@ -17,7 +17,11 @@ class Api::V1::PurchaseTransactionsController < ApplicationController
   private
 
   def set_sign_in_user_mocking
-    @current_user = User.first
+    @current_user = if params[:test_user_id].present?
+                      User.find(params[:test_user_id])
+                    else
+                      User.find(600)
+                    end
   end
 
   def set_loyalty_service

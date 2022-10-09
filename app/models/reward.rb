@@ -61,7 +61,7 @@ class Reward < ApplicationRecord
     return false unless first_transaction.present?
 
     date_count_from_user_created_at = (Date.current - first_transaction.created_at.to_date).to_i
-    date_count_from_user_created_at < days
+    date_count_from_user_created_at <= days
   end
 
   def total_user_spend_from_transaction(user:)
