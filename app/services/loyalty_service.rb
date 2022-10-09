@@ -1,10 +1,10 @@
 class LoyaltyService
+  include LoyaltyLevel
   def initialize(user_object:)
     @user = user_object
   end
 
   def save_point(transaction_object:)
-
     # base point
     point = if transaction_object.from_foreign_country
               foreign_point_formula(spend: transaction_object.spend)
