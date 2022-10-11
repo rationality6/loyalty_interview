@@ -8,6 +8,7 @@ class PointHistory < ApplicationRecord
     monthly_objects = PointHistory
                         .where(created_at: beginning_of_month..beginning_of_next_month)
                         .where(user_id: user.id)
+
     this_month_total_point = monthly_objects.pluck(:point_earn).sum
     this_month_total_point
   end
