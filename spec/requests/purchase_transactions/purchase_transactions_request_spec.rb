@@ -1,17 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "PurchaseTransactions", type: :request do
-  let!(:test_user) {
-    user = User.new
-    user.save(validate: false)
-    user
-  }
-
-  let!(:test_user_profile) {
-    profile = Profile.new({ user_id: test_user.id })
-    profile.save()
-    profile
-  }
+  let!(:test_user) { create(:user, :skip_validate) }
+  let!(:test_user_profile) { Profile.create({ user_id: test_user.id }) }
 
   let!(:past_60_days_user) {
     user = User.new(email: "past_birthday_user")
