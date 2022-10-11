@@ -7,5 +7,10 @@ FactoryBot.define do
     trait :test_email do
       email { "test00@gmail.com" }
     end
+
+    trait :in_the_past_60 do
+      created_at { 60.days.ago }
+    end
+
   end
 end
