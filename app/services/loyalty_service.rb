@@ -1,10 +1,10 @@
 class LoyaltyService
+  include LoyaltyLevel
   def initialize(user_object:)
     @user = user_object
   end
 
   def save_point(transaction_object:)
-
     # base point
     point = if transaction_object.from_foreign_country
               foreign_point_formula(spend: transaction_object.spend)
@@ -34,6 +34,8 @@ class LoyaltyService
 
     # free movie tickets within 60 days
     Reward.new.check_user_free_movie_tickets(user: @user)
+
+    level_check_and_level_up(user: @user)
 
     point_history
   end

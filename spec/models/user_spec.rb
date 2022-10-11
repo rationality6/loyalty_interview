@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "User", type: :model do
-  let!(:test_user) {
-    user = User.new(email: "test_user")
-    user.save(validate: false)
-    user
-  }
+  let!(:test_user) { create(:user, :skip_validate, :test_email) }
 
   let!(:user_profile) {
     profile = Profile.new({
