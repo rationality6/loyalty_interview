@@ -24,3 +24,7 @@ ENV.each { |k, v| env(k, v) }
 every 1.month, at: 'start of the month at 1am' do
   rake "batch:get_user_birth_coffee_reward", :environment => "development"
 end
+
+every 1.day, at: '1:00 am' do
+  rake "batch:expire_point", :environment => "development"
+end
