@@ -1,13 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "PurchaseTransactions", type: :request do
-  let!(:test_user) { create(:user, :skip_validate) }
-  let!(:test_user_profile) { Profile.create({ user_id: test_user.id }) }
+  let!(:test_user) { create(:user, :skip_validate, :with_profile) }
 
-  let!(:past_60_days_user) {
-    user = User.new(email: "past_birthday_user")
-    user.save(validate: false)
-    Profile.new({ user_id: user.id }).save
+  let!(:first_purchase_past_60_days_user) {
+    user = create(:user, :skip_validate, :test_email, :with_profile)
     purchase_transaction = PurchaseTransaction.create(user_id: user.id, spend: 0)
     purchase_transaction.update(created_at: purchase_transaction.created_at - (61.days))
     user
@@ -164,7 +161,7 @@ RSpec.describe "PurchaseTransactions", type: :request do
     end
 
     it "later 60 days" do
-      post purchase_purchase_transactions_url, params: { spend: 1000, test_user_id: past_60_days_user.id }
+      post purchase_purchase_transactions_url, params: { spend: 1000, test_user_id: first_purchase_past_60_days_user.id }
       user_id = JSON.parse(response.body)['user_id']
 
       reward_result = Reward
