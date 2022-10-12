@@ -1,15 +1,24 @@
 FactoryBot.define do
   factory :user do
+
     trait :skip_validate do
       to_create { |instance| instance.save(validate: false) }
+    end
+
+    trait :with_profile do
+      profile { build(:profile, :with_birthday) }
+    end
+
+    trait :with_past_birth_profile do
+      profile { build(:profile, :with_1_month_past_birthday) }
     end
 
     trait :test_email do
       email { "test00@gmail.com" }
     end
 
-    trait :in_the_past_60 do
-      created_at { 60.days.ago }
+    trait :test_email01 do
+      email { "test01@gmail.com" }
     end
 
   end

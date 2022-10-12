@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "LoyaltyLevel", type: :request do
-  let!(:test_user) { create(:user, :skip_validate) }
-  let!(:test_user_profile) { Profile.create({ user_id: test_user.id }) }
+  let!(:test_user) { create(:user, :skip_validate, :with_profile) }
 
   describe "level test" do
     it "user promote to gold" do
