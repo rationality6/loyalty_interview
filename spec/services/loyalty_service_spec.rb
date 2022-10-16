@@ -1,17 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "LoyaltyService" do
-  let!(:test_user) {
-    user = User.new
-    user.save(validate: false)
-    user
-  }
-
-  let!(:test_user_profile) {
-    profile = Profile.new({ user_id: test_user.id })
-    profile.save()
-    profile
-  }
+  let!(:test_user) { create(:user, :skip_validate, :with_profile) }
 
   let!(:loyalty_service_instance) {
     LoyaltyService.new(user_object: :test_user)
