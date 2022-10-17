@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "User", type: :model do
   describe "birthday coffee reward" do
 
-    let!(:test_user) { create(:user, :skip_validate, :test_email, :with_profile) }
+    let!(:test_user) { create(:user, :test_email, :with_profile) }
 
     it "birthday" do
       # after batch
@@ -15,7 +15,7 @@ RSpec.describe "User", type: :model do
       expect(birth_coffee_reward.present?).to eq(true)
     end
 
-    let!(:past_birthday_user) { create(:user, :skip_validate, :test_email01, :with_past_birth_profile) }
+    let!(:past_birthday_user) { create(:user, :test_email01, :with_past_birth_profile) }
 
     it "no" do
       Reward.give_birthday_reward()
