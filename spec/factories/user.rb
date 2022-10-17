@@ -1,9 +1,6 @@
 FactoryBot.define do
   factory :user do
-
-    trait :skip_validate do
-      to_create { |instance| instance.save(validate: false) }
-    end
+    to_create { |instance| instance.save(validate: false) }
 
     trait :with_profile do
       profile { build(:profile, :with_birthday) }

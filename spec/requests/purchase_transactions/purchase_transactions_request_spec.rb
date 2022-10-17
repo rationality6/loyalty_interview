@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "PurchaseTransactions", type: :request do
-  let!(:test_user) { create(:user, :skip_validate, :with_profile) }
+  let!(:test_user) { create(:user, :with_profile) }
 
   let!(:first_purchase_past_60_days_user) {
-    user = create(:user, :skip_validate, :test_email, :with_profile)
-    purchase_transaction = PurchaseTransaction.create(user_id: user.id, spend: 0)
-    purchase_transaction.update(created_at: purchase_transaction.created_at - (61.days))
+    user = create(:user, :test_email, :with_profile)
+    create(:purchase_transaction, :past_60_days, { user_id: user.id })
     user
   }
 
