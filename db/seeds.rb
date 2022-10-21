@@ -9,7 +9,7 @@
 mock_user = User.new(
   {
     id: 600,
-    email: "foobarman@gmail.com"
+    email: 'foobarman@gmail.com'
   }
 )
 
@@ -17,8 +17,8 @@ mock_user.save(validate: false)
 
 mock_user_profile = Profile.new(
   user_id: mock_user.id,
-  name: "test_user0",
-  birthday: ((Time.now) - 1.month)
+  name: 'test_user0',
+  birthday: (Time.now - 1.month)
 )
 
 mock_user_profile.save

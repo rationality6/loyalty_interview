@@ -3,7 +3,7 @@ class Api::V1::PurchaseTransactionsController < ApplicationController
   before_action :set_loyalty_service
 
   def purchase
-    raise "no spend params" unless params[:spend].present?
+    raise 'no spend params' unless params[:spend].present?
 
     params[:from_foreign_country] = false unless params[:from_foreign_country].present?
 
@@ -27,8 +27,4 @@ class Api::V1::PurchaseTransactionsController < ApplicationController
   def set_loyalty_service
     @loyalty_service_instanse = LoyaltyService.new(user_object: @current_user)
   end
-
 end
-
-
-

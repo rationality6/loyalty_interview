@@ -4,8 +4,7 @@ FactoryBot.define do
 
     trait :past_60_days do
       # added 1 more day as time differences
-      created_at { Time.now - (61.days) }
+      created_at { Time.now - 61.days }
     end
-
   end
 end

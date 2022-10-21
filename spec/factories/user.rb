@@ -11,12 +11,11 @@ FactoryBot.define do
     end
 
     trait :test_email do
-      email { "test00@gmail.com" }
+      email { 'test00@gmail.com' }
     end
 
     trait :test_email01 do
-      email { "test01@gmail.com" }
+      email { 'test01@gmail.com' }
     end
-
   end
 end
