@@ -9,5 +9,4 @@ class User < ApplicationRecord
   has_many :point_histories
   has_many :rebate_histories
   has_many :rewards
-
 end

@@ -15,7 +15,7 @@ class LoyaltyService
     point_history = PointHistory.new({
                                        user_id: @user.id,
                                        purchase_transaction_id: transaction_object.id,
-                                       point_earn: point,
+                                       point_earn: point
                                      })
 
     point_history.save
@@ -23,9 +23,7 @@ class LoyaltyService
     update_user_point_total(point: point)
 
     # free coffee reward
-    if PointHistory.validate_accumulates_point_current_month(user: @user)
-      Reward.new.get_free_coffee_reward(user: @user)
-    end
+    Reward.new.get_free_coffee_reward(user: @user) if PointHistory.validate_accumulates_point_current_month(user: @user)
 
     # rebate point
     if RebateHistory.check_and_update_user_rebate_right(user: @user)
@@ -54,6 +52,4 @@ class LoyaltyService
   def foreign_point_formula(spend:)
     point_formula(spend: spend) * 2
   end
-
 end
-

@@ -6,15 +6,15 @@ module LoyaltyLevel
   def level_check_and_level_up(user:)
     if 1000 <= user.profile.point_total and user.profile.point_total <= 5000 and user.profile.tier == 'standard'
       give_user_airport_reward(user: user)
-      level_up(user: user, tier: "gold")
+      level_up(user: user, tier: 'gold')
     elsif 5000 <= user.profile.point_total and user.profile.tier == 'gold'
-      level_up(user: user, tier: "platinum")
+      level_up(user: user, tier: 'platinum')
     end
   end
 
   private
 
-  def level_up(reward = nil, user:, tier:)
+  def level_up(_reward = nil, user:, tier:)
     user.profile.update(tier: tier)
   end
 
@@ -23,8 +23,7 @@ module LoyaltyLevel
 
     Reward.create(
       user_id: user.id,
-      reward_name: "4x Airport Lounge Access Reward",
+      reward_name: '4x Airport Lounge Access Reward'
     )
   end
-
 end
